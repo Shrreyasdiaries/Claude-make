@@ -1,0 +1,18 @@
+{
+  "name": "vauclair-haute-horlogerie",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host"
+  },
+  "dependencies": {
+    "gsap": "^3.13.0",
+    "lenis": "^1.3.0"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}

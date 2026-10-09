@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vauclair — Haute Horlogerie</title>
+    <meta name="description" content="Vauclair. Swiss haute horlogerie, hand-finished since 1874." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b0b0c'/><text x='16' y='23' font-size='20' text-anchor='middle' fill='%23c8a96a' font-family='serif'>V</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Loader -->
+    <div class="loader" aria-hidden="true">
+      <div class="loader__brand">VAUCLAIR</div>
+      <div class="loader__count"><span class="loader__num">0</span></div>
+      <div class="loader__bar"><span></span></div>
+    </div>
+
+    <!-- Custom cursor -->
+    <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a href="#top" class="nav__logo" data-magnetic>VAUCLAIR</a>
+      <nav class="nav__links">
+        <a href="#collection">Collection</a>
+        <a href="#calibre">Calibre</a>
+        <a href="#heritage">Heritage</a>
+        <a href="#visit">Boutiques</a>
+      </nav>
+      <a href="#visit" class="nav__cta" data-magnetic>Book a viewing</a>
+    </header>
+
+    <main id="top">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero__bg">
+          <div class="hero__glow"></div>
+          <div class="hero__rings"><span></span><span></span><span></span></div>
+        </div>
+        <h1 class="hero__title" data-split="chars">Vauclair</h1>
+        <div class="hero__watch">
+          <div class="hero__tilt" data-watch="midnight"></div>
+          <div class="hero__shadow"></div>
+        </div>
+        <div class="hero__meta hero__meta--left">
+          <span class="eyebrow">Ref. 26.1874.ST</span>
+          <span>Calibre V-1874 · 41 mm</span>
+        </div>
+        <div class="hero__meta hero__meta--right">
+          <span class="eyebrow">Haute Horlogerie</span>
+          <span>Hand-finished since 1874</span>
+        </div>
+        <p class="hero__tag"><em>Time,</em> sculpted by hand.</p>
+        <div class="hero__reveal">
+          <span class="eyebrow">The Royal Dodecagon</span>
+          <h2>An icon, <em>re-engineered</em> for the next century.</h2>
+        </div>
+        <div class="hero__scroll"><span>Scroll</span><i></i></div>
+      </section>
+
+      <!-- MARQUEE -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__inner">
+          <span>Haute Horlogerie</span><b>✦</b><span>Manufacture Genève</span><b>✦</b><span>Calibre V-1874</span><b>✦</b><span>247 Components</span><b>✦</b>
+          <span>Haute Horlogerie</span><b>✦</b><span>Manufacture Genève</span><b>✦</b><span>Calibre V-1874</span><b>✦</b><span>247 Components</span><b>✦</b>
+        </div>
+      </div>
+
+      <!-- MANIFESTO -->
+      <section class="manifesto">
+        <span class="eyebrow">Manifesto</span>
+        <p class="manifesto__text" data-split="words">
+          We do not make watches to tell the time. We make them to hold it — a hundred and fifty years of
+          patience, filed, bevelled and polished by hand, until steel feels like silk and a second becomes something
+          you can feel on your wrist.
+        </p>
+      </section>
+
+      <!-- CALIBRE / EXPLODED -->
+      <section class="calibre" id="calibre">
+        <div class="calibre__head">
+          <span class="eyebrow">Inside the Calibre</span>
+          <h2>247 components.<br /><em>One heartbeat.</em></h2>
+        </div>
+        <div class="calibre__stage">
+          <div class="stack">
+            <div class="layer" data-layer="movement" data-z="-280"></div>
+            <div class="layer" data-layer="case" data-z="0"></div>
+            <div class="layer" data-layer="dial" data-z="90"></div>
+            <div class="layer" data-layer="hands" data-z="180"></div>
+            <div class="layer" data-layer="bezel" data-z="270"></div>
+            <div class="layer" data-layer="crystal" data-z="360"></div>
+          </div>
+          <ul class="calibre__labels">
+            <li><b>01</b><span>Sapphire crystal</span><small>Anti-reflective, both faces</small></li>
+            <li><b>02</b><span>Dodecagonal bezel</span><small>Twelve facets, hand-polished</small></li>
+            <li><b>03</b><span>Gold hands</span><small>Faceted, filled with luminescent</small></li>
+            <li><b>04</b><span>Clous de Paris dial</span><small>Engine-turned on a 1906 lathe</small></li>
+            <li><b>05</b><span>Calibre V-1874</span><small>72 h reserve · 28,800 vph</small></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- COLLECTION (horizontal) -->
+      <section class="collection" id="collection">
+        <div class="collection__track">
+          <div class="collection__intro">
+            <span class="eyebrow">The Collection</span>
+            <h2>Five dials.<br /><em>Five temperaments.</em></h2>
+            <p>Each reference is assembled by a single watchmaker, who signs the movement before it leaves the bench.</p>
+            <div class="collection__progress"><span></span></div>
+          </div>
+          <article class="card" data-cursor="View">
+            <div class="card__watch" data-watch="midnight"></div>
+            <div class="card__info"><span class="card__ref">26.1874.ST — 01</span><h3>Nuit Bleue</h3><p>Steel · Midnight clous dial</p></div>
+          </article>
+          <article class="card" data-cursor="View">
+            <div class="card__watch" data-watch="glacier"></div>
+            <div class="card__info"><span class="card__ref">26.1874.ST — 02</span><h3>Glacier</h3><p>Steel · Ice-blue clous dial</p></div>
+          </article>
+          <article class="card" data-cursor="View">
+            <div class="card__watch" data-watch="forest"></div>
+            <div class="card__info"><span class="card__ref">26.1874.OR — 03</span><h3>Forêt</h3><p>18k yellow gold · Green dial</p></div>
+          </article>
+          <article class="card" data-cursor="View">
+            <div class="card__watch" data-watch="obsidian"></div>
+            <div class="card__info"><span class="card__ref">26.1874.CE — 04</span><h3>Obsidienne</h3><p>Black ceramic · Onyx dial</p></div>
+          </article>
+          <article class="card" data-cursor="View">
+            <div class="card__watch" data-watch="sand"></div>
+            <div class="card__info"><span class="card__ref">26.1874.OR — 05</span><h3>Désert</h3><p>18k gold · Sand dial</p></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- NUMBERS -->
+      <section class="numbers">
+        <div class="numbers__item"><span class="numbers__val" data-count="247">0</span><span class="numbers__lbl">Components</span></div>
+        <div class="numbers__item"><span class="numbers__val" data-count="72" data-suffix="h">0</span><span class="numbers__lbl">Power reserve</span></div>
+        <div class="numbers__item"><span class="numbers__val" data-count="1874">0</span><span class="numbers__lbl">Founded</span></div>
+        <div class="numbers__item"><span class="numbers__val" data-count="380" data-suffix="h">0</span><span class="numbers__lbl">Hand-finishing</span></div>
+      </section>
+
+      <!-- HERITAGE -->
+      <section class="heritage" id="heritage">
+        <div class="heritage__head">
+          <span class="eyebrow">Heritage</span>
+          <h2>A century and a half,<br /><em>measured in seconds.</em></h2>
+        </div>
+        <div class="heritage__list">
+          <div class="heritage__line"><span></span></div>
+          <div class="milestone"><span class="milestone__year">1874</span><div><h3>The first workbench</h3><p>Élise Vauclair opens a two-window atelier above a bakery, finishing movements for the great houses of Genève.</p></div></div>
+          <div class="milestone"><span class="milestone__year">1921</span><div><h3>The minute repeater</h3><p>Our first grande complication chimes the hours in a cathedral gong, tuned by ear over eleven months.</p></div></div>
+          <div class="milestone"><span class="milestone__year">1972</span><div><h3>Steel, made precious</h3><p>The Royal Dodecagon debuts: a luxury sports watch in steel, priced above gold. The industry laughs. Then it follows.</p></div></div>
+          <div class="milestone"><span class="milestone__year">2026</span><div><h3>Calibre V-1874</h3><p>Our 150th-anniversary movement: 247 components, a 72-hour reserve, and every bridge bevelled by hand.</p></div></div>
+        </div>
+      </section>
+
+      <!-- VISIT -->
+      <section class="visit" id="visit">
+        <div class="visit__watch" data-watch="obsidian"></div>
+        <span class="eyebrow">Private appointments</span>
+        <h2 class="visit__title" data-split="lines"><span>Hold it</span><span><em>before you own it.</em></span></h2>
+        <a href="#top" class="btn" data-magnetic data-cursor="Book"><span>Book a private viewing</span></a>
+        <div class="visit__cities">
+          <span>Genève</span><span>Paris</span><span>London</span><span>New York</span><span>Tokyo</span><span>Mumbai</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">VAUCLAIR</div>
+      <div class="footer__cols">
+        <div><h4>Maison</h4><a href="#heritage">Heritage</a><a href="#calibre">Manufacture</a><a href="#visit">Careers</a></div>
+        <div><h4>Collection</h4><a href="#collection">Royal Dodecagon</a><a href="#collection">Complications</a><a href="#collection">Haute Joaillerie</a></div>
+        <div><h4>Services</h4><a href="#visit">Boutiques</a><a href="#visit">Servicing</a><a href="#visit">Contact</a></div>
+      </div>
+      <div class="footer__base"><span>© 2026 Vauclair SA, Genève. A fictional maison.</span><span>Made with patience.</span></div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
