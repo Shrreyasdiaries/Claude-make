@@ -25,3 +25,18 @@ Then open **http://localhost:5173**.
 - Velocity-reactive marquee, count-up numbers, a timeline that draws itself, a custom cursor, magnetic buttons
 
 Stack: Vite · GSAP + ScrollTrigger · Lenis smooth scroll. No image assets.
+
+---
+
+# Aram Architects
+
+A second concept site, in `aram/`: an architecture studio whose projects are shown as isometric models on plinths, all drawn in code.
+
+Run it with `npm run aram` (after `npm install`), then open **http://localhost:5173**.
+You can also open `aram/index.html` directly in a browser, since it is a single self-contained file.
+
+- **Hero**: a line drawing of a house draws itself, then on scroll it fills in as a solid model, the sky turns to dusk and the windows light up
+- **Selected works**: five project panels pinned on screen, each one wiping up over the last
+- **Index of works**: hover a row to see a floating preview of that model
+- **Approach**: a site plan that builds up in four layers (site, light, mass, material) as you scroll
+- Live local time for the Mumbai, Dubai and Lisbon studios, and a copy-email button

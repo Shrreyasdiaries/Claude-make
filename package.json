@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host",
+    "aram": "vite aram --host"
   },
   "dependencies": {
     "gsap": "^3.13.0",

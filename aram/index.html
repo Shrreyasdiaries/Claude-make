@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Aram Architects</title>
+<meta name="description" content="Aram is an architecture studio designing residences, cultural buildings and retreats in India, the Gulf and Portugal." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+<style>
+/* Layout: a drafting sheet. Grid-lined paper, models on plinths, mono annotations like a drawing set; the works chapter turns to basalt night. */
+:root {
+  color-scheme: light;
+  --paper: #ecebe5;      /* tracing paper */
+  --concrete: #d6d5cd;   /* board-formed concrete */
+  --basalt: #141513;     /* night chapter */
+  --graphite: #55574f;   /* secondary ink */
+  --ink: #1b1c19;        /* drawing ink */
+  --verdigris: #3f6f63;  /* oxidised copper accent */
+  --amber: #f1b765;      /* lit windows at dusk */
+  --rule: rgba(27, 28, 25, 0.12);
+  --rule-light: rgba(236, 235, 229, 0.14);
+  --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --gutter: clamp(16px, 4vw, 64px);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--verdigris); outline-offset: 4px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; text-wrap: balance; letter-spacing: -0.02em; line-height: 0.95; }
+p { margin: 0; }
+.mono { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.5; }
+.mask { display: block; overflow: hidden; }
+.mask > span { display: block; }
+svg { display: block; }
+
+/* ---------- loader ---------- */
+.loader {
+  position: fixed; inset: 0; z-index: 100; background: var(--basalt); color: var(--paper);
+  display: flex; flex-direction: column; justify-content: space-between; padding: var(--gutter);
+}
+.loader__top, .loader__bottom { display: flex; justify-content: space-between; gap: 1rem; }
+.loader__num { font-family: var(--display); font-weight: 200; font-stretch: 125%; font-size: clamp(4rem, 14vw, 12rem); line-height: 0.8; font-variant-numeric: tabular-nums; }
+.loader__rule { height: 1px; background: var(--rule-light); position: relative; }
+.loader__rule span { position: absolute; inset: 0; background: var(--paper); transform-origin: left; transform: scaleX(0); }
+
+/* ---------- nav ---------- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: calc(20px + env(safe-area-inset-top, 0px)) var(--gutter) 20px;
+  color: #ecebe5; mix-blend-mode: difference;
+  transition: transform 0.7s var(--ease);
+}
+.nav.is-hidden { transform: translateY(-120%); }
+.nav__logo { font-family: var(--display); font-weight: 700; font-stretch: 125%; letter-spacing: 0.18em; font-size: 1rem; }
+.nav__links { display: flex; gap: 2rem; }
+.nav__links a { position: relative; }
+.nav__links a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.6s var(--ease); }
+.nav__links a:hover::after { transform: scaleX(1); transform-origin: left; }
+@media (max-width: 760px) { .nav__links a:not(:last-child) { display: none; } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; height: 100vh; height: 100svh; min-height: 600px; overflow: hidden; color: var(--ink); }
+.hero__grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+  background-size: 64px 64px; background-position: center;
+}
+.hero__dusk {
+  position: absolute; inset: 0; opacity: 0;
+  background: linear-gradient(180deg, #121a2b 0%, #2b2c45 45%, #6d4a4a 78%, #c48a5a 100%);
+}
+.hero__model { position: absolute; left: 50%; top: 46%; width: min(92vw, 120vh); aspect-ratio: 1.6; translate: -50% -50%; }
+.hero__model svg { width: 100%; height: 100%; overflow: visible; }
+.hero__model .ln { fill: none; stroke: currentColor; stroke-width: 0.08; stroke-linejoin: round; }
+.hero__title {
+  position: absolute; left: var(--gutter); right: var(--gutter); bottom: calc(2vh + env(safe-area-inset-bottom, 0px));
+  font-weight: 800; font-stretch: 125%; font-size: clamp(5rem, 25vw, 28rem); line-height: 0.78; letter-spacing: -0.04em;
+  display: flex; justify-content: space-between; overflow: hidden; padding-top: 0.06em;
+}
+.hero__title span { display: inline-block; }
+.hero__note { position: absolute; display: flex; flex-direction: column; gap: 0.35rem; }
+.hero__note--tl { top: calc(96px + env(safe-area-inset-top, 0px)); left: var(--gutter); max-width: 22rem; }
+.hero__note--tr { top: calc(96px + env(safe-area-inset-top, 0px)); right: var(--gutter); text-align: right; }
+.hero__lede { font-size: clamp(1.1rem, 1.6vw, 1.35rem); line-height: 1.45; text-transform: none; letter-spacing: 0; font-family: var(--body); }
+.hero__lede em { color: var(--verdigris); }
+.hero__levels { position: absolute; right: var(--gutter); top: 40%; display: flex; flex-direction: column; gap: 2.2rem; text-align: right; }
+.hero__levels span { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+.hero__night {
+  position: absolute; left: var(--gutter); right: var(--gutter); bottom: 12vh; color: var(--paper);
+  font-size: clamp(2.6rem, 7.5vw, 8rem); font-weight: 300; font-stretch: 110%;
+}
+.hero__night .mask > span { transform: translateY(105%); }
+.hero__night em { font-family: var(--body); font-style: italic; font-weight: 300; font-stretch: 100%; color: var(--amber); letter-spacing: -0.01em; }
+@media (max-width: 760px) {
+  .hero__levels { display: none; }
+  .hero__note--tr { display: none; }
+  .hero__model { top: 50%; width: 120vw; }
+}
+
+/* ---------- thesis ---------- */
+.thesis { padding: 22vh var(--gutter) 16vh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr); gap: 4vw; }
+.thesis h2 { font-size: clamp(2rem, 4.6vw, 4.8rem); font-weight: 300; font-stretch: 105%; }
+.thesis h2 em { font-family: var(--body); font-style: italic; font-weight: 300; color: var(--verdigris); font-stretch: 100%; }
+.thesis__body { display: grid; gap: 3rem; }
+.thesis__body p { max-width: 36rem; color: var(--graphite); }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--rule); margin-top: 2rem; }
+.fact { padding: 1.6rem 1.2rem 0 0; display: grid; gap: 0.5rem; }
+.fact b { font-family: var(--display); font-weight: 300; font-stretch: 112%; font-size: clamp(2.4rem, 4.4vw, 4.6rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.fact .mono { color: var(--graphite); }
+@media (max-width: 860px) {
+  .thesis { grid-template-columns: 1fr; padding-top: 14vh; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2rem; }
+}
+
+/* ---------- works (pinned stack) ---------- */
+.works-head { background: var(--basalt); color: var(--paper); padding: 18vh var(--gutter) 10vh; display: flex; justify-content: space-between; align-items: end; gap: 2rem; flex-wrap: wrap; }
+.works-head h2 { font-size: clamp(3rem, 10vw, 11rem); font-weight: 200; font-stretch: 125%; }
+.works-head p { max-width: 24rem; color: rgba(236, 235, 229, 0.65); }
+.works { position: relative; height: 100vh; height: 100svh; background: var(--basalt); color: var(--paper); overflow: hidden; }
+.work { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); background: var(--basalt); }
+.work__media { position: relative; overflow: hidden; background: var(--studio, #2a2b27); }
+.work__img { position: absolute; inset: 0; display: grid; place-items: center; padding: 6%; will-change: transform; }
+.work__img svg { width: 100%; height: 100%; }
+.work__info { padding: calc(110px + env(safe-area-inset-top, 0px)) var(--gutter) 6vh; display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; border-left: 1px solid var(--rule-light); min-width: 0; }
+.work__kicker { color: rgba(236, 235, 229, 0.6); }
+.work__info h3 { font-size: clamp(2.6rem, 5vw, 5.6rem); font-weight: 600; font-stretch: 112%; margin: 1rem 0 1.4rem; }
+.work__info p { color: rgba(236, 235, 229, 0.72); max-width: 30rem; font-size: 1.05rem; }
+.specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem 1.5rem; margin: 0; border-top: 1px solid var(--rule-light); padding-top: 1.4rem; }
+.specs dt { color: rgba(236, 235, 229, 0.5); }
+.specs dd { margin: 0.2rem 0 0; font-family: var(--mono); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.works__count { position: absolute; left: var(--gutter); bottom: 4vh; z-index: 5; color: var(--paper); display: flex; gap: 0.6rem; align-items: center; mix-blend-mode: difference; }
+.works__count i { display: block; width: 80px; height: 1px; background: rgba(236, 235, 229, 0.3); position: relative; }
+.works__count i b { position: absolute; inset: 0; background: var(--paper); transform-origin: left; transform: scaleX(0.2); }
+@media (max-width: 860px) {
+  .work { grid-template-columns: 1fr; grid-template-rows: 52% 48%; }
+  .work__info { border-left: 0; border-top: 1px solid var(--rule-light); padding: 1.6rem var(--gutter) 3rem; justify-content: flex-start; gap: 1rem; }
+  .work__info h3 { margin: 0.4rem 0 0.6rem; }
+  .work__info p { font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .specs { padding-top: 1rem; gap: 0.6rem 1rem; }
+  .works__count { top: calc(84px + env(safe-area-inset-top, 0px)); bottom: auto; }
+}
+
+/* ---------- index ---------- */
+.index { padding: 18vh var(--gutter); position: relative; }
+.index__head { display: flex; justify-content: space-between; align-items: end; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 5vh; }
+.index__head h2 { font-size: clamp(2.6rem, 6vw, 6.4rem); font-weight: 300; font-stretch: 112%; }
+.index__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.row {
+  display: grid; grid-template-columns: 6rem minmax(0, 2.4fr) minmax(0, 1.4fr) minmax(0, 1.2fr) 4rem;
+  gap: 1rem; align-items: baseline; padding: 1.4rem 0; border-bottom: 1px solid var(--rule); position: relative; cursor: default;
+}
+.row::before { content: ''; position: absolute; inset: 0; background: var(--ink); transform: scaleY(0); transform-origin: bottom; transition: transform 0.5s var(--ease); z-index: -1; }
+.row:hover::before { transform: scaleY(1); }
+.row:hover { color: var(--paper); }
+.row__name { font-family: var(--display); font-size: clamp(1.4rem, 2.6vw, 2.5rem); font-stretch: 108%; font-weight: 500; line-height: 1.05; transition: transform 0.6s var(--ease); }
+.row:hover .row__name { transform: translateX(1rem); }
+.row .mono:last-child { text-align: right; }
+.index__list { position: relative; z-index: 0; isolation: isolate; }
+.preview {
+  position: fixed; top: 0; left: 0; width: 340px; aspect-ratio: 4 / 3; pointer-events: none; z-index: 40;
+  border-radius: 2px; overflow: hidden; opacity: 0; scale: 0.6; background: var(--concrete);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+.preview svg { width: 100%; height: 100%; padding: 8%; }
+@media (max-width: 860px) {
+  .row { grid-template-columns: 3.4rem minmax(0, 1fr) auto; }
+  .row > :nth-child(3), .row > :nth-child(4) { display: none; }
+  .preview { display: none; }
+}
+
+/* ---------- approach ---------- */
+.approach { background: var(--concrete); padding: 18vh var(--gutter); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6vw; }
+.approach__sticky { position: sticky; top: 14vh; height: 72vh; align-self: start; display: flex; flex-direction: column; gap: 1rem; }
+.approach__sheet { flex: 1; min-height: 0; background: var(--paper); border: 1px solid var(--rule); position: relative; }
+.approach__sheet svg { width: 100%; height: 100%; }
+.approach__sheet .stroke { fill: none; stroke: var(--ink); stroke-width: 1; }
+.approach__titleblock { display: flex; justify-content: space-between; gap: 1rem; color: var(--graphite); }
+.approach__intro h2 { font-size: clamp(2.4rem, 5vw, 5.4rem); font-weight: 300; font-stretch: 112%; margin-bottom: 1.4rem; }
+.approach__intro p { color: var(--graphite); max-width: 32rem; }
+.step { min-height: 72vh; display: flex; flex-direction: column; justify-content: center; gap: 1rem; border-top: 1px solid var(--rule); }
+.step h3 { font-size: clamp(2rem, 3.6vw, 3.6rem); font-weight: 500; font-stretch: 112%; }
+.step p { color: var(--graphite); max-width: 30rem; }
+.step .mono { color: var(--verdigris); }
+@media (max-width: 860px) {
+  .approach { grid-template-columns: 1fr; padding-top: 12vh; }
+  .approach__sticky { top: calc(64px + env(safe-area-inset-top, 0px)); height: 42vh; z-index: 2; }
+  .approach__titleblock { display: none; }
+  .step { min-height: 60vh; }
+}
+
+/* ---------- studios ---------- */
+.studios { padding: 18vh var(--gutter) 12vh; }
+.studios h2 { font-size: clamp(2.4rem, 5vw, 5.4rem); font-weight: 300; font-stretch: 112%; margin-bottom: 6vh; }
+.studios__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.studio { padding: 2rem 2rem 2rem 0; display: grid; gap: 0.8rem; border-right: 1px solid var(--rule); }
+.studio + .studio { padding-left: 2rem; }
+.studio:last-child { border-right: 0; }
+.studio h3 { font-size: clamp(1.8rem, 3vw, 3rem); font-weight: 600; font-stretch: 112%; }
+.studio time { font-family: var(--display); font-weight: 200; font-stretch: 125%; font-size: clamp(2.2rem, 3.6vw, 3.6rem); font-variant-numeric: tabular-nums; line-height: 1; }
+.studio address { font-style: normal; color: var(--graphite); }
+@media (max-width: 860px) {
+  .studios__grid { grid-template-columns: 1fr; }
+  .studio, .studio + .studio { padding: 1.6rem 0; border-right: 0; border-bottom: 1px solid var(--rule); }
+}
+
+/* ---------- contact ---------- */
+.contact { background: var(--basalt); color: var(--paper); padding: 20vh var(--gutter) 6vh; overflow: hidden; }
+.contact h2 { font-size: clamp(3rem, 10vw, 11rem); font-weight: 200; font-stretch: 125%; line-height: 0.9; }
+.contact h2 em { font-family: var(--body); font-style: italic; font-weight: 300; font-stretch: 100%; color: var(--amber); }
+.contact__row { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem 2rem; margin-top: 8vh; }
+.contact__mail { font-family: var(--display); font-stretch: 112%; font-size: clamp(1.4rem, 3.4vw, 3rem); user-select: all; border-bottom: 1px solid var(--rule-light); padding-bottom: 0.3rem; overflow-wrap: anywhere; }
+.btn {
+  appearance: none; border: 1px solid var(--paper); background: transparent; color: var(--paper);
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.95rem 1.6rem; border-radius: 99px; cursor: pointer; position: relative; overflow: hidden;
+  transition: color 0.5s var(--ease);
+}
+.btn::before { content: ''; position: absolute; inset: 0; background: var(--paper); transform: translateY(101%); transition: transform 0.5s var(--ease); z-index: -1; }
+.btn { isolation: isolate; }
+.btn:hover { color: var(--basalt); }
+.btn:hover::before { transform: translateY(0); }
+.footer { margin-top: 18vh; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; color: rgba(236, 235, 229, 0.5); border-top: 1px solid var(--rule-light); padding-top: 1.4rem; }
+.contact__mark { font-family: var(--display); font-weight: 800; font-stretch: 125%; font-size: 33vw; line-height: 0.75; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1px rgba(236, 235, 229, 0.18); margin: 8vh 0 -4vw; white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="loader" aria-hidden="true">
+  <div class="loader__top mono"><span>Aram Architects</span><span>Drawing set A-101</span></div>
+  <div>
+    <div class="loader__num">0</div>
+    <div class="loader__rule"><span></span></div>
+  </div>
+  <div class="loader__bottom mono"><span>Mumbai · Dubai · Lisbon</span><span>Scale 1:200</span></div>
+</div>
+
+<header class="nav mono">
+  <a href="#top" class="nav__logo">ARAM</a>
+  <nav class="nav__links" aria-label="Main">
+    <a href="#works">Works</a>
+    <a href="#approach">Approach</a>
+    <a href="#studios">Studios</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" aria-label="Aram Architects">
+    <div class="hero__grid"></div>
+    <div class="hero__dusk"></div>
+    <div class="hero__model" id="heroModel"></div>
+
+    <div class="hero__note hero__note--tl">
+      <span class="mono">Aram (आराम / آرام) — n. rest</span>
+      <p class="hero__lede">An architecture studio designing buildings that let people <em>slow down</em>.</p>
+    </div>
+    <div class="hero__note hero__note--tr mono">
+      <span>A-101 · Axonometric</span>
+      <span>Kaya House, Alibaug</span>
+      <span>18°38′N 72°52′E</span>
+    </div>
+    <div class="hero__levels mono" aria-hidden="true">
+      <span>+9.70 Roof</span>
+      <span>+5.20 FFL</span>
+      <span>±0.00 Plinth</span>
+    </div>
+
+    <h1 class="hero__title" aria-label="Aram"><span>A</span><span>R</span><span>A</span><span>M</span></h1>
+
+    <h2 class="hero__night" aria-label="Rest is a design problem.">
+      <span class="mask"><span>Rest is a</span></span>
+      <span class="mask"><span><em>design problem.</em></span></span>
+    </h2>
+  </section>
+
+  <section class="thesis">
+    <span class="mono">Practice</span>
+    <div class="thesis__body">
+      <h2 data-reveal>We draw light first, walls second, and leave the <em>quiet</em> for last.</h2>
+      <p>Aram was founded in Mumbai in 2009 by Meher Aram and Tomás Reis. Fifty-two architects now work across three studios, on houses, libraries, retreats and the occasional tower. Every project begins with a week on site, measuring the sun before we measure anything else.</p>
+      <div class="facts">
+        <div class="fact"><b data-count="64">0</b><span class="mono">Buildings completed</span></div>
+        <div class="fact"><b data-count="11">0</b><span class="mono">Countries</span></div>
+        <div class="fact"><b data-count="23">0</b><span class="mono">Design awards</span></div>
+        <div class="fact"><b data-count="2009">0</b><span class="mono">Founded</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="works">
+    <div class="works-head">
+      <h2>Selected<br />works</h2>
+      <p>Five recent buildings, shown as the studio presents them to clients: as models on a plinth, lit by the site's own sun.</p>
+    </div>
+    <div class="works">
+      <div class="works__count mono"><span class="works__n">01</span><i><b></b></i><span>05</span></div>
+    </div>
+  </section>
+
+  <section class="index" aria-labelledby="indexTitle">
+    <div class="index__head">
+      <h2 id="indexTitle">Index of works</h2>
+      <span class="mono">2009 — 2026 · selection</span>
+    </div>
+    <ul class="index__list"></ul>
+    <div class="preview" aria-hidden="true"></div>
+  </section>
+
+  <section class="approach" id="approach">
+    <div class="approach__sticky">
+      <div class="approach__sheet"><svg id="plan" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg></div>
+      <div class="approach__titleblock mono"><span>Sheet P-01 · Site plan</span><span class="approach__layer">Layer 1 / 4</span></div>
+    </div>
+    <div>
+      <div class="approach__intro step" style="min-height:auto;border:0;padding-bottom:10vh">
+        <span class="mono">Approach</span>
+        <h2>Four drawings before a single wall.</h2>
+        <p>Each project is worked out on one sheet, in this order. Scroll to watch the plan build up.</p>
+      </div>
+      <div class="step" data-step="0"><span class="mono">01 · Site</span><h3>Read the ground</h3><p>We survey contours, trees, wind and water by hand. The building has to agree with the land before it can agree with anyone else.</p></div>
+      <div class="step" data-step="1"><span class="mono">02 · Light</span><h3>Trace the sun</h3><p>We plot the sun's path for the solstices and the monsoon. Rooms are placed where the light is kindest at the hour they are used.</p></div>
+      <div class="step" data-step="2"><span class="mono">03 · Mass</span><h3>Place the weight</h3><p>Thick walls go where heat arrives. Courtyards go where air can move. The plan is mostly settled by now.</p></div>
+      <div class="step" data-step="3"><span class="mono">04 · Material</span><h3>Choose what ages well</h3><p>Lime plaster, laterite, teak and board-formed concrete. Materials that look better in twenty years than on opening day.</p></div>
+    </div>
+  </section>
+
+  <section class="studios" id="studios">
+    <h2>Three studios,<br />one drawing board.</h2>
+    <div class="studios__grid">
+      <div class="studio"><span class="mono">Studio 01 · Since 2009</span><h3>Mumbai</h3><time data-tz="Asia/Kolkata">--:--</time><address>3rd floor, Kala Ghoda Mills<br />Fort, Mumbai 400001</address></div>
+      <div class="studio"><span class="mono">Studio 02 · Since 2016</span><h3>Dubai</h3><time data-tz="Asia/Dubai">--:--</time><address>Building 7, Alserkal Avenue<br />Al Quoz, Dubai</address></div>
+      <div class="studio"><span class="mono">Studio 03 · Since 2020</span><h3>Lisbon</h3><time data-tz="Europe/Lisbon">--:--</time><address>Rua da Boavista 84<br />1200-066 Lisboa</address></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="mono">New projects</span>
+    <h2 data-reveal style="margin-top:1.4rem">Begin with<br /><em>a conversation.</em></h2>
+    <div class="contact__row">
+      <span class="contact__mail" id="mail">studio@aram.archi</span>
+      <button class="btn" id="copyMail" type="button">Copy email</button>
+    </div>
+    <div class="contact__mark" aria-hidden="true">ARAM</div>
+    <footer class="footer mono">
+      <span>© 2026 Aram Architects. A fictional studio.</span>
+      <span>Drawn in Mumbai, Dubai and Lisbon</span>
+    </footer>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+/* =========================================================
+   Isometric model renderer: boxes → SVG with faces, shadows,
+   windows and drafting lines. Used by the hero and every project.
+   ========================================================= */
+const C = Math.cos(Math.PI / 6);
+const proj = (x, y, z) => [(x - y) * C, (x + y) * 0.5 - z];
+const fmt = (p) => p.map((n) => n.toFixed(2)).join(',');
+
+function shade(hex, k) {
+  const n = parseInt(hex.slice(1), 16);
+  const ch = [n >> 16, (n >> 8) & 255, n & 255].map((c) => Math.round(k < 0 ? c * (1 + k) : c + (255 - c) * k));
+  return '#' + ch.map((c) => c.toString(16).padStart(2, '0')).join('');
+}
+
+function hull(points) {
+  const p = points.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [], up = [];
+  for (const q of p) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], q) <= 0) lo.pop(); lo.push(q); }
+  for (const q of p.reverse()) { while (up.length >= 2 && cross(up[up.length - 2], up[up.length - 1], q) <= 0) up.pop(); up.push(q); }
+  return lo.slice(0, -1).concat(up.slice(0, -1));
+}
+
+let uid = 0;
+function renderModel(scene, { lines = 0.35, hero = false } = {}) {
+  const id = 'm' + uid++;
+  const P = scene.palette;
+  const sun = scene.sun || [0.7, 0.25];
+  const g = scene.ground;
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  const track = (q) => { minX = Math.min(minX, q[0]); maxX = Math.max(maxX, q[0]); minY = Math.min(minY, q[1]); maxY = Math.max(maxY, q[1]); };
+  const poly = (arr, attrs) => { const q = arr.map((a) => proj(...a)); q.forEach(track); return `<polygon points="${q.map(fmt).join(' ')}" ${attrs}/>`; };
+  const outline = (arr) => { const q = arr.map((a) => proj(...a)); return `<path class="ln" pathLength="1" d="M${q.map(fmt).join('L')}Z"/>`; };
+
+  let plinth = '', shadows = '', body = '', clip = '';
+  for (const it of scene.items) {
+    if (it.type === 'tree') {
+      const [cx, cy] = proj(it.x, it.y, it.z || g);
+      const r = it.r;
+      track([cx - r * 1.2, cy - r * 2.6]); track([cx + r * 1.2, cy + r]);
+      const sh = proj(it.x + sun[0] * r * 2, it.y + sun[1] * r * 2, it.z || g);
+      shadows += `<ellipse cx="${sh[0].toFixed(2)}" cy="${sh[1].toFixed(2)}" rx="${(r * 1.3).toFixed(2)}" ry="${(r * 0.6).toFixed(2)}" fill="${P.shadow}"/>`;
+      body += `<g class="mf"><rect x="${cx - r * 0.07}" y="${cy - r * 1.4}" width="${r * 0.14}" height="${r * 1.4}" fill="${shade(P.green, -0.5)}"/>
+        <circle cx="${cx}" cy="${cy - r * 1.7}" r="${r}" fill="${P.green}"/>
+        <circle cx="${cx + r * 0.35}" cy="${cy - r * 1.55}" r="${r * 0.7}" fill="${shade(P.green, -0.2)}"/>
+        <circle cx="${cx - r * 0.3}" cy="${cy - r * 2}" r="${r * 0.55}" fill="${shade(P.green, 0.15)}"/></g>
+        <circle class="ln" pathLength="1" cx="${cx}" cy="${cy - r * 1.7}" r="${r}"/>`;
+      continue;
+    }
+    const { x, y, z = g, w, d, h, kind = 'solid' } = it;
+    const base = it.color || (kind === 'plinth' ? P.plinth : kind === 'glass' ? P.glass : kind === 'water' ? P.water : kind === 'green' ? P.green : P.body);
+    const top = [[x, y, z + h], [x + w, y, z + h], [x + w, y + d, z + h], [x, y + d, z + h]];
+    const right = [[x + w, y, z], [x + w, y + d, z], [x + w, y + d, z + h], [x + w, y, z + h]];
+    const left = [[x, y + d, z], [x + w, y + d, z], [x + w, y + d, z + h], [x, y + d, z + h]];
+    const op = kind === 'glass' ? ' fill-opacity=".82"' : '';
+    let s = `<g class="mf">${poly(right, `fill="${shade(base, -0.3)}"${op}`)}${poly(left, `fill="${shade(base, -0.1)}"${op}`)}${poly(top, `fill="${shade(base, 0.12)}"${op}`)}`;
+
+    if (kind === 'glass') {
+      // mullions
+      const step = it.mullion || 2;
+      for (let u = step; u < d; u += step) s += `<line ${lineAttr([x + w, y + u, z], [x + w, y + u, z + h])} stroke="${shade(P.glass, -0.55)}" stroke-width=".12"/>`;
+      for (let u = step; u < w; u += step) s += `<line ${lineAttr([x + u, y + d, z], [x + u, y + d, z + h])} stroke="${shade(P.glass, -0.55)}" stroke-width=".12"/>`;
+    }
+    s += '</g>';
+
+    // windows as recessed bands, with a glow layer for dusk
+    if (it.win) {
+      const { cols = 4, rows = 1, faces = ['left', 'right'], m = 0.14 } = it.win;
+      for (const f of faces) {
+        const len = f === 'left' ? w : d;
+        const pt = (u, v) => (f === 'left' ? [x + u * w, y + d, z + v * h] : [x + w, y + u * d, z + v * h]);
+        for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+          const gap = Math.min(0.06, 0.6 / len);
+          const u0 = m / 2 + (c / cols) * (1 - m) + gap / 2, u1 = m / 2 + ((c + 1) / cols) * (1 - m) - gap / 2;
+          const v0 = 0.22 + (r / rows) * 0.6, v1 = 0.22 + ((r + 1) / rows) * 0.6 - 0.08;
+          const quad = [pt(u0, v0), pt(u1, v0), pt(u1, v1), pt(u0, v1)];
+          s += `<g class="mf">${poly(quad, `fill="${shade(P.glass, f === 'left' ? -0.2 : -0.45)}"`)}</g>`;
+          s += poly(quad, `class="glow" fill="${P.glow || '#f1b765'}" opacity="${scene.lit ? 0.85 : 0}"`);
+        }
+      }
+    }
+    if (lines) s += `<g class="lns">${outline(right)}${outline(left)}${outline(top)}</g>`;
+
+    if (kind === 'plinth') {
+      plinth += s;
+      clip = top.map((a) => fmt(proj(...a))).join(' ');
+    } else {
+      body += s;
+      if (kind !== 'water' && it.shadow !== false) {
+        const corners = [];
+        for (const zz of [z, z + h]) for (const [cx, cy] of [[x, y], [x + w, y], [x + w, y + d], [x, y + d]]) {
+          const t = zz - g;
+          corners.push(proj(cx + sun[0] * t, cy + sun[1] * t, g));
+        }
+        shadows += `<polygon points="${hull(corners).map(fmt).join(' ')}" fill="${P.shadow}"/>`;
+      }
+    }
+  }
+  function lineAttr(a, b) { const p = proj(...a), q = proj(...b); return `x1="${p[0].toFixed(2)}" y1="${p[1].toFixed(2)}" x2="${q[0].toFixed(2)}" y2="${q[1].toFixed(2)}"`; }
+
+  const pad = (maxX - minX) * 0.06;
+  const vb = [minX - pad, minY - pad, maxX - minX + pad * 2, maxY - minY + pad * 2].map((n) => n.toFixed(2)).join(' ');
+  const stroke = hero ? '' : `<style>#${id} .ln{fill:none;stroke:${P.line || '#000'};stroke-opacity:${lines};stroke-width:.07;stroke-linejoin:round}</style>`;
+  return `<svg id="${id}" viewBox="${vb}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${stroke}
+    <defs><clipPath id="${id}c"><polygon points="${clip}"/></clipPath>
+    <filter id="${id}b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation=".35"/></filter></defs>
+    <g class="m-plinth">${plinth}</g>
+    <g class="m-shadow" clip-path="url(#${id}c)" filter="url(#${id}b)" opacity=".55">${shadows}</g>
+    <g class="m-body">${body}</g></svg>`;
+}
+
+/* ---------- the projects, as massing models ---------- */
+const PAL = {
+  kaya: { body: '#e9e6de', plinth: '#3a3128', glass: '#7e9aa3', water: '#5f9ea0', green: '#6f8b5e', shadow: '#1a1712', line: '#20201c', glow: '#f1b765' },
+  stepwell: { body: '#d9a877', plinth: '#2f2a24', glass: '#4b5a5c', water: '#3f7f86', green: '#7d9460', shadow: '#2a1c10', line: '#2b1d10' },
+  qudra: { body: '#efe8da', plinth: '#c9a77d', glass: '#8fb0b8', water: '#5ba3a8', green: '#8a9a5b', shadow: '#5a3f20', line: '#3d2c18', glow: '#ffd28a' },
+  tejo: { body: '#f1efe9', plinth: '#55504a', glass: '#6f8f9e', water: '#4d8c9a', green: '#6d8a5d', shadow: '#1d1d1b', line: '#1d1d1b', glow: '#f6c27a' },
+  monsoon: { body: '#b6563a', plinth: '#2e3a30', glass: '#4f6660', water: '#4f8c80', green: '#5e8a52', shadow: '#121a14', line: '#1f140f' },
+};
+
+const SCENES = {
+  kaya: {
+    palette: PAL.kaya, ground: 0, sun: [0.75, 0.2],
+    items: [
+      { kind: 'plinth', x: -6, y: -6, z: -3, w: 44, d: 32, h: 3 },
+      { kind: 'water', x: 24, y: 4, w: 12, d: 16, h: 0.5 },
+      { kind: 'solid', x: 0, y: 0, w: 22, d: 5, h: 0.6, color: '#cfc9bb' },
+      { kind: 'glass', x: 3, y: 4, w: 15, d: 12, h: 4.2, mullion: 2.4 },
+      { kind: 'solid', x: 0, y: 5, w: 3, d: 11, h: 4.2 },
+      { type: 'tree', x: -2, y: 21, r: 2.6 },
+      { kind: 'solid', x: -3, y: 6, z: 4.2, w: 30, d: 10, h: 4.6, win: { cols: 5, faces: ['left'] } },
+      { kind: 'solid', x: 6, y: 18, w: 14, d: 4, h: 1.2, color: '#cfc9bb' },
+      { type: 'tree', x: 32, y: 22, r: 2.2 },
+    ],
+  },
+  stepwell: {
+    palette: PAL.stepwell, ground: 0, sun: [0.6, 0.35],
+    items: [
+      { kind: 'plinth', x: -4, y: -4, z: -3, w: 42, d: 42, h: 3 },
+      ...[0, 1, 2, 3, 4].map((i) => ({ kind: 'solid', x: i * 3, y: i * 3, z: i * 2.6, w: 34 - i * 6, d: 34 - i * 6, h: 2.6, win: i === 4 ? { cols: 3 } : undefined })),
+      { kind: 'green', x: 3.4, y: 3.4, z: 5.2, w: 2, d: 2, h: 0.3 },
+      { type: 'tree', x: 36, y: 34, r: 2.4 },
+      { type: 'tree', x: 34, y: 2, r: 2 },
+    ],
+  },
+  qudra: {
+    palette: PAL.qudra, ground: 0, sun: [0.85, 0.15], lit: true,
+    items: [
+      { kind: 'plinth', x: -6, y: -6, z: -2, w: 50, d: 34, h: 2 },
+      ...[[0, 0], [16, 0], [32, 0], [0, 20]].map(([a, b]) => ({ kind: 'solid', x: a, y: b, w: 0.7, d: 0.7, h: 6.2, shadow: false })),
+      { kind: 'glass', x: 5, y: 4, w: 26, d: 13, h: 4.6, mullion: 2.6 },
+      { kind: 'water', x: 2, y: 19, w: 34, d: 3, h: 0.3 },
+      ...[[16, 20], [32, 20]].map(([a, b]) => ({ kind: 'solid', x: a, y: b, w: 0.7, d: 0.7, h: 6.2, shadow: false })),
+      { kind: 'solid', x: -2, y: -2, z: 6.2, w: 37, d: 25, h: 0.8 },
+    ],
+  },
+  tejo: {
+    palette: PAL.tejo, ground: 0, sun: [0.55, 0.3],
+    items: [
+      { kind: 'plinth', x: -8, y: -8, z: -2, w: 30, d: 30, h: 2 },
+      ...Array.from({ length: 11 }, (_, i) => ({
+        kind: 'solid', x: Math.sin(i * 0.5) * 1.6, y: Math.cos(i * 0.5) * 1.2 - 1.2, z: i * 3.2, w: 12, d: 11, h: 3.2,
+        win: { cols: 3 },
+      })),
+      { type: 'tree', x: 16, y: 18, r: 1.8 },
+    ],
+  },
+  monsoon: {
+    palette: PAL.monsoon, ground: 0, sun: [0.6, 0.3],
+    items: [
+      { kind: 'plinth', x: -4, y: -4, z: -2.5, w: 38, d: 38, h: 2.5 },
+      { kind: 'solid', x: 0, y: 0, w: 30, d: 6, h: 5.5, win: { cols: 5, faces: ['left'] } },
+      { kind: 'solid', x: 0, y: 6, w: 6, d: 18, h: 5.5, win: { cols: 3, faces: ['right'] } },
+      { kind: 'water', x: 9, y: 9, w: 12, d: 12, h: 0.3 },
+      { type: 'tree', x: 15, y: 15, r: 3 },
+      { kind: 'solid', x: 24, y: 6, w: 6, d: 18, h: 3.6, win: { cols: 3, faces: ['right'] } },
+      { kind: 'solid', x: 0, y: 24, w: 30, d: 6, h: 3.6, win: { cols: 5, faces: ['left'] } },
+    ],
+  },
+};
+
+const WORKS = [
+  { key: 'kaya', name: 'Kaya House', type: 'Residence', place: 'Alibaug, India', year: '2024', area: '1,240 m²', status: 'Completed', studio: '#2b2a25',
+    text: 'A weekend house on the Konkan coast. A long concrete bar floats over a glass pavilion, shading it from the afternoon sun and framing the sea.' },
+  { key: 'stepwell', name: 'Stepwell Library', type: 'Cultural', place: 'Jodhpur, India', year: '2022', area: '3,800 m²', status: 'Completed', studio: '#3a2a1f',
+    text: 'A public library built like a Rajasthani stepwell in reverse. Reading terraces climb in sandstone, each one cooler and quieter than the last.' },
+  { key: 'qudra', name: 'Al Qudra Pavilion', type: 'Hospitality', place: 'Dubai, UAE', year: '2023', area: '2,150 m²', status: 'Completed', studio: '#4a3523',
+    text: 'A desert retreat under a single 37-metre roof plate. The canopy carries the shade; the glass walls slide away after sunset.' },
+  { key: 'tejo', name: 'Casa Tejo', type: 'Residential tower', place: 'Lisbon, Portugal', year: '2021', area: '6,900 m²', status: 'Completed', studio: '#23272a',
+    text: 'Eleven floors above the Tagus, each turned slightly from the one below, so every apartment gets its own corner of the river.' },
+  { key: 'monsoon', name: 'Monsoon Court', type: 'Residence', place: 'Kochi, India', year: '2026', area: '980 m²', status: 'On site', studio: '#1c2620',
+    text: 'A laterite courtyard house built around rain. The roofs drain into a central pool, and the whole house is designed to be heard in July.' },
+];
+
+const INDEX = [
+  ['AR-118', 'Monsoon Court', 'Kochi', 'Residence', '2026', 'monsoon'],
+  ['AR-112', 'Kaya House', 'Alibaug', 'Residence', '2024', 'kaya'],
+  ['AR-109', 'Al Qudra Pavilion', 'Dubai', 'Hospitality', '2023', 'qudra'],
+  ['AR-104', 'Stepwell Library', 'Jodhpur', 'Cultural', '2022', 'stepwell'],
+  ['AR-097', 'Casa Tejo', 'Lisbon', 'Residential', '2021', 'tejo'],
+  ['AR-090', 'Salt Pan Studios', 'Kutch', 'Workplace', '2020', 'stepwell'],
+  ['AR-081', 'Quinta do Vale', 'Douro', 'Winery', '2019', 'qudra'],
+  ['AR-072', 'Banyan School', 'Pune', 'Education', '2017', 'monsoon'],
+  ['AR-063', 'Marina Lofts', 'Dubai', 'Residential', '2015', 'tejo'],
+  ['AR-041', 'The Ghat House', 'Varanasi', 'Residence', '2012', 'kaya'],
+];
+
+/* ---------- build DOM ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+$('#heroModel').innerHTML = renderModel(SCENES.kaya, { hero: true });
+
+const worksEl = $('.works');
+WORKS.forEach((w, i) => {
+  const el = document.createElement('article');
+  el.className = 'work';
+  el.style.setProperty('--studio', `radial-gradient(120% 90% at 40% 30%, ${shade(w.studio, 0.12)} 0%, ${w.studio} 55%, ${shade(w.studio, -0.45)} 100%)`);
+  el.innerHTML = `
+    <div class="work__media"><div class="work__img">${renderModel(SCENES[w.key], { lines: 0.28 })}</div></div>
+    <div class="work__info">
+      <div>
+        <span class="mono work__kicker">${String(i + 1).padStart(2, '0')} — ${w.type}</span>
+        <h3>${w.name}</h3>
+        <p>${w.text}</p>
+      </div>
+      <dl class="specs mono">
+        <div><dt>Location</dt><dd>${w.place}</dd></div>
+        <div><dt>Year</dt><dd>${w.year}</dd></div>
+        <div><dt>Area</dt><dd>${w.area}</dd></div>
+        <div><dt>Status</dt><dd>${w.status}</dd></div>
+      </dl>
+    </div>`;
+  worksEl.appendChild(el);
+});
+
+const list = $('.index__list');
+list.innerHTML = INDEX.map(([no, name, place, type, year, key]) =>
+  `<li class="row" data-key="${key}"><span class="mono">${no}</span><span class="row__name">${name}</span><span class="mono">${place}</span><span class="mono">${type}</span><span class="mono">${year}</span></li>`
+).join('');
+
+/* ---------- approach sheet: four drawing layers ---------- */
+(function buildPlan() {
+  const svg = $('#plan');
+  const L = [];
+  // 1 · site: contours + north arrow
+  let site = '';
+  for (let k = 0; k < 7; k++) {
+    let d = '';
+    for (let x = -10; x <= 410; x += 10) {
+      const y = 40 + k * 55 + Math.sin(x / 60 + k * 0.8) * 16 + Math.sin(x / 23 + k) * 4;
+      d += (x === -10 ? 'M' : 'L') + x + ',' + y.toFixed(1);
+    }
+    site += `<path class="stroke" pathLength="1" d="${d}" stroke-opacity=".35"/>`;
+  }
+  site += `<path class="stroke" pathLength="1" d="M360,70 L360,30 M352,44 L360,30 L368,44"/><text x="356" y="84" font-family="IBM Plex Mono" font-size="10" fill="#1b1c19">N</text>`;
+  L.push(site);
+  // 2 · light: sun path arc + rays
+  let light = `<path class="stroke" pathLength="1" d="M40,300 Q200,20 360,300" stroke-dasharray="4 4" style="stroke:#3f6f63"/>`;
+  [0.15, 0.35, 0.5, 0.65, 0.85].forEach((t) => {
+    const x = (1 - t) * (1 - t) * 40 + 2 * (1 - t) * t * 200 + t * t * 360;
+    const y = (1 - t) * (1 - t) * 300 + 2 * (1 - t) * t * 20 + t * t * 300;
+    light += `<circle class="stroke" pathLength="1" cx="${x}" cy="${y}" r="7" style="stroke:#3f6f63"/><path class="stroke" pathLength="1" d="M${x},${y + 9} L${200 + (x - 200) * 0.2},${235}" stroke-opacity=".3"/>`;
+  });
+  L.push(light);
+  // 3 · mass: courtyard plan walls
+  const walls = [[110, 150, 180, 16], [110, 150, 16, 140], [274, 150, 16, 140], [110, 274, 70, 16], [220, 274, 70, 16], [160, 196, 80, 0.01]];
+  L.push(walls.map(([x, y, w, h]) => `<rect class="stroke" pathLength="1" x="${x}" y="${y}" width="${w}" height="${h}" style="stroke-width:1.6"/>`).join('') +
+    `<rect class="stroke" pathLength="1" x="150" y="190" width="100" height="60" stroke-dasharray="3 3"/>`);
+  // 4 · material: hatched walls + labels
+  L.push(`<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#1b1c19" stroke-width="1.2"/></pattern></defs>` +
+    walls.slice(0, 5).map(([x, y, w, h]) => `<rect class="hatchfill" x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#hatch)"/>`).join('') +
+    `<rect class="hatchfill" x="150" y="190" width="100" height="60" fill="#3f6f63" fill-opacity=".18"/>
+     <g class="hatchfill" font-family="IBM Plex Mono" font-size="9" fill="#1b1c19"><text x="112" y="140">LATERITE 450</text><text x="168" y="224">POOL</text><text x="226" y="306">TEAK SCREEN</text></g>`);
+  svg.innerHTML = L.map((g, i) => `<g class="layer" data-layer="${i}">${g}</g>`).join('');
+})();
+
+/* ---------- live studio clocks ---------- */
+function clocks() {
+  $$('time[data-tz]').forEach((t) => {
+    t.textContent = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: t.dataset.tz }).format(new Date());
+  });
+}
+clocks(); setInterval(clocks, 15000);
+
+/* ---------- copy email ---------- */
+$('#copyMail').addEventListener('click', async (e) => {
+  const btn = e.currentTarget;
+  try { await navigator.clipboard.writeText('studio@aram.archi'); btn.textContent = 'Copied'; }
+  catch { const r = document.createRange(); r.selectNodeContents($('#mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected, press Ctrl+C'; }
+  setTimeout(() => (btn.textContent = 'Copy email'), 2200);
+});
+
+/* =========================================================
+   Motion
+   ========================================================= */
+if (!window.gsap || !window.ScrollTrigger) { $('.loader').remove(); return; }
+gsap.registerPlugin(ScrollTrigger);
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+scrollTo(0, 0);
+
+let lenis = null;
+if (!reduced && window.Lenis) {
+  lenis = new Lenis({ lerp: 0.09 });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((t) => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+  lenis.stop();
+}
+
+$$('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
+  const href = a.getAttribute('href');
+  const target = href === '#top' ? 0 : $(href);
+  if (target === null) return;
+  e.preventDefault();
+  lenis ? lenis.scrollTo(target, { duration: 1.8 }) : (target === 0 ? scrollTo({ top: 0, behavior: 'smooth' }) : target.scrollIntoView({ behavior: 'smooth' }));
+}));
+
+const nav = $('.nav');
+let lastY = 0;
+const onScroll = (y) => { nav.classList.toggle('is-hidden', y > lastY && y > 160); lastY = y; };
+lenis ? lenis.on('scroll', ({ scroll }) => onScroll(scroll)) : addEventListener('scroll', () => onScroll(scrollY), { passive: true });
+
+/* ---------- loader → hero drawing ---------- */
+const heroSvg = $('#heroModel svg');
+const heroLines = $$('.ln', heroSvg);
+const heroFills = $$('.mf', heroSvg);
+const heroGlows = $$('.glow', heroSvg);
+const letters = $$('.hero__title span');
+
+gsap.set(heroLines, { strokeDasharray: 1, strokeDashoffset: 1 });
+gsap.set(heroFills, { opacity: 0 });
+gsap.set('.m-shadow', { opacity: 0 });
+gsap.set(letters, { yPercent: 105 });
+gsap.set(['.hero__note', '.hero__levels', '.nav'], { autoAlpha: 0 });
+gsap.set('.hero__grid', { scale: 1.15, autoAlpha: 0 });
+
+const intro = gsap.timeline({ paused: true, onComplete: () => lenis?.start() })
+  .to('.hero__grid', { scale: 1, autoAlpha: 1, duration: 1.6, ease: 'expo.out' })
+  .to(heroLines, { strokeDashoffset: 0, duration: 1.8, ease: 'power2.inOut', stagger: { each: 0.025, from: 'start' } }, 0.1)
+  .to(letters, { yPercent: 0, duration: 1.4, ease: 'expo.out', stagger: 0.08 }, 0.5)
+  .to(['.hero__note', '.hero__levels', '.nav'], { autoAlpha: 1, duration: 1, stagger: 0.1 }, 1);
+if (!lenis) intro.eventCallback('onComplete', null);
+
+const count = { v: 0 };
+gsap.timeline()
+  .to(count, { v: 100, duration: reduced ? 0.3 : 1.5, ease: 'power2.inOut', onUpdate: () => ($('.loader__num').textContent = Math.round(count.v)) })
+  .to('.loader__rule span', { scaleX: 1, duration: reduced ? 0.3 : 1.5, ease: 'power2.inOut' }, 0)
+  .to('.loader', { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.1, ease: 'expo.inOut' }, '+=0.15')
+  .add(() => intro.play(), '-=0.5')
+  .set('.loader', { display: 'none' });
+
+/* ---------- hero scroll: drawing → model → dusk ---------- */
+const mm = gsap.matchMedia();
+mm.add({ wide: '(min-width: 761px)', narrow: '(max-width: 760px)' }, (ctx) => {
+  const { wide } = ctx.conditions;
+
+  gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=240%', scrub: 1, pin: true },
+  })
+    .fromTo(letters, { yPercent: 0 }, { yPercent: -105, stagger: 0.03, duration: 0.25, immediateRender: false }, 0)
+    .fromTo(['.hero__note', '.hero__levels'], { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.15, immediateRender: false }, 0)
+    .to(heroFills, { opacity: 1, stagger: 0.008, duration: 0.25 }, 0.05)
+    .to('.m-shadow', { opacity: 1, duration: 0.2 }, 0.2)
+    .to(heroLines, { opacity: 0.25, duration: 0.2 }, 0.2)
+    .to('.hero__model', { scale: wide ? 1.18 : 1.05, y: wide ? '-4vh' : '-10vh', duration: 0.6, ease: 'power1.inOut' }, 0.1)
+    .to('.hero__dusk', { opacity: 1, duration: 0.3 }, 0.5)
+    .to('.hero__grid', { opacity: 0, duration: 0.2 }, 0.5)
+    .to('.hero__model', { color: '#ecebe5', duration: 0.3 }, 0.5)
+    .fromTo(heroGlows, { opacity: 0 }, { opacity: 0.9, stagger: 0.02, duration: 0.15 }, 0.65)
+    .to('.hero__night .mask > span', { y: '0%', stagger: 0.06, duration: 0.2, ease: 'power2.out' }, 0.75)
+    .to({}, { duration: 0.1 });
+
+  /* works: each panel wipes up over the last, its model settling into place */
+  const panels = $$('.work');
+  const n = panels.length;
+  panels.forEach((p, i) => { if (i) gsap.set(p, { clipPath: 'inset(100% 0% 0% 0%)' }); });
+  const wt = gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: {
+      trigger: '.works', start: 'top top', end: () => '+=' + innerHeight * (n - 0.4), scrub: 1, pin: true,
+      onUpdate: (self) => {
+        const k = Math.min(n - 1, Math.round(self.progress * (n - 1)));
+        $('.works__n').textContent = String(k + 1).padStart(2, '0');
+      },
+    },
+  });
+  wt.to('.works__count b', { scaleX: 1, duration: n - 1 }, 0);
+  panels.forEach((p, i) => {
+    const img = $('.work__img', p);
+    if (i === 0) { wt.fromTo(img, { scale: 1.15 }, { scale: 1, duration: 1 }, 0); return; }
+    const at = i - 1;
+    wt.to(p, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1, ease: 'power2.inOut' }, at)
+      .fromTo(img, { scale: 1.35, rotate: -4 }, { scale: 1, rotate: 0, duration: 1, ease: 'power2.out' }, at)
+      .from($$('.work__info > div > *, .specs > div', p), { y: 50, opacity: 0, stagger: 0.05, duration: 0.5, ease: 'power2.out' }, at + 0.4)
+      .to($('.work__img', panels[i - 1]), { scale: 0.85, opacity: 0.3, duration: 1, ease: 'power2.inOut' }, at);
+  });
+
+  /* approach: draw each layer as its step passes */
+  $$('.step[data-step]').forEach((s) => {
+    const i = Number(s.dataset.step);
+    const layer = $(`#plan .layer[data-layer="${i}"]`);
+    const strokes = $$('.stroke', layer);
+    const fills = $$('.hatchfill', layer);
+    gsap.set(strokes, { strokeDasharray: 1, strokeDashoffset: 1 });
+    if (fills.length) gsap.set(fills, { opacity: 0 });
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: s, start: 'top 75%', end: 'top 25%', scrub: 0.6,
+        onToggle: (self) => self.isActive && ($('.approach__layer').textContent = `Layer ${i + 1} / 4`),
+      },
+    });
+    tl.to(strokes, { strokeDashoffset: 0, stagger: 0.04, ease: 'none' });
+    if (fills.length) tl.to(fills, { opacity: 1, stagger: 0.05 }, 0.2);
+    tl.from($$('h3, p', s), { y: 40, opacity: 0, stagger: 0.1 }, 0);
+  });
+});
+
+/* ---------- text reveals & counters ---------- */
+$$('[data-reveal]').forEach((el) => gsap.from(el, {
+  y: 80, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 85%' },
+}));
+gsap.from('.works-head h2', { yPercent: 30, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.works-head', start: 'top 75%' } });
+$$('[data-count]').forEach((el) => {
+  const o = { v: 0 }, end = Number(el.dataset.count);
+  gsap.to(o, { v: end, duration: 2.2, ease: 'expo.out', onUpdate: () => (el.textContent = Math.round(o.v)), scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+});
+gsap.from('.row', { y: 40, opacity: 0, stagger: 0.05, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.index__list', start: 'top 80%' } });
+gsap.from('.studio', { y: 60, opacity: 0, stagger: 0.12, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.studios__grid', start: 'top 80%' } });
+gsap.fromTo('.contact__mark', { xPercent: 8 }, { xPercent: -8, ease: 'none', scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'bottom bottom', scrub: true } });
+
+/* ---------- index: floating model preview ---------- */
+if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const pv = $('.preview');
+  const cache = {};
+  const px = gsap.quickTo(pv, 'x', { duration: 0.6, ease: 'power3' });
+  const py = gsap.quickTo(pv, 'y', { duration: 0.6, ease: 'power3' });
+  addEventListener('mousemove', (e) => { px(e.clientX + 24); py(e.clientY - 120); });
+  $$('.row').forEach((row) => {
+    row.addEventListener('mouseenter', () => {
+      const k = row.dataset.key;
+      cache[k] ||= renderModel(SCENES[k], { lines: 0.25 });
+      pv.innerHTML = cache[k];
+      gsap.to(pv, { opacity: 1, scale: 1, duration: 0.5, ease: 'expo.out' });
+    });
+    row.addEventListener('mouseleave', () => gsap.to(pv, { opacity: 0, scale: 0.6, duration: 0.4, ease: 'power3.in' }));
+  });
+}
+
+document.fonts?.ready.then(() => ScrollTrigger.refresh());
+})();
+</script>
+</body>
+</html>
